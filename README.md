@@ -117,15 +117,16 @@ Alasan dilakukan normalisasi:
 
 Setelah fitur audio dinormalisasi, informasi pendukung seperti `track_name` dan `artist_name` tetap dipertahankan di dataframe akhir agar hasil rekomendasi dapat ditampilkan dengan jelas (nama lagu dan artis). Kedua kolom ini tidak digunakan dalam proses perhitungan kemiripan, tetapi berfungsi sebagai identitas pada output sistem.
 
-### 4. Sampling Data
-
-Dataset asli berisi lebih dari 160.000 lagu. Untuk menghindari overload memori pada saat proses perhitungan cosine similarity (karena matrix 160k x 160k akan sangat besar), dilakukan pengambilan sampel sebanyak 10.000 lagu secara acak. Jumlah ini sudah mencukupi untuk demonstrasi dan evaluasi sistem rekomendasi secara efisien tanpa membuat sistem crash.
-
-Sampling dilakukan menggunakan `df.sample(n=10000, random_state=42)` untuk menjaga reprodusibilitas hasil.
-
 ## Modeling and Results
 
 Dalam proyek ini, sistem rekomendasi dibangun menggunakan pendekatan **Content-Based Filtering** dengan perhitungan **Cosine Similarity** antar lagu berdasarkan fitur audionya. Meskipun tidak menggunakan model supervised seperti regresi atau klasifikasi, proses modeling tetap melibatkan pemilihan algoritma, transformasi data, dan perhitungan kemiripan yang menghasilkan rekomendasi.
+
+### Sampling Data
+
+Dataset asli berisi lebih dari 160.000 lagu, yang jika dihitung semua pairwise similarity-nya akan menghasilkan matrix yang sangat besar (hingga 160k x 160k).  
+Untuk menjaga efisiensi komputasi dan mencegah beban memori berlebih, dilakukan proses sampling sebanyak **10.000 lagu secara acak** menggunakan fungsi `df.sample(n=10000, random_state=42)`.  
+Jumlah ini sudah cukup representatif untuk demonstrasi dan evaluasi sistem, serta membantu proses cosine similarity tetap dapat berjalan lancar.
+
 
 Model: Content-Based Filtering dengan Cosine Similarity
 
